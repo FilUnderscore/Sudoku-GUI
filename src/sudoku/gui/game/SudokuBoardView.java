@@ -56,9 +56,8 @@ public final class SudokuBoardView extends JFrame
 				
 				if(generated)
 				{
-                                    System.out.println("Generated " + generated + " int " + value.getValue());
-					textField.setEnabled(false);
-					textField.setDisabledTextColor(Color.black);
+                                    textField.setEnabled(false);
+                                    textField.setDisabledTextColor(Color.black);
 				}
                                 else
                                 {
