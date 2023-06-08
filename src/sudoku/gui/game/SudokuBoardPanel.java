@@ -44,14 +44,16 @@ public class SudokuBoardPanel extends JPanel
 				textField.setSize(offset - 5, offset - 5);
 				textField.setLocation(x * offset + 5 + regionOffsetX, y * offset + regionOffsetY);
 				textField.setHorizontalAlignment(JTextField.CENTER);
-
+                                textField.setFont(textField.getFont().deriveFont(HEIGHT_WIDTH / 16.0f));
+                                
 				BoardValue value = model.get(x, y);
 				boolean generated = value.isGenerated();
 				
 				if(generated)
 				{
                                     textField.setEnabled(false);
-                                    textField.setDisabledTextColor(Color.black);
+                                    textField.setDisabledTextColor(Color.white);
+                                    textField.setBackground(Color.darkGray);
 				}
                                 else
                                 {

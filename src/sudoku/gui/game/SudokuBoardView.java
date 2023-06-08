@@ -12,7 +12,7 @@ import sudoku.board.IBoard;
 
 public final class SudokuBoardView extends JFrame
 {
-	private static final int HEIGHT_WIDTH = 500;
+	private static final int HEIGHT_WIDTH = 700;
 	
 	private final IBoard model;
 	
@@ -22,8 +22,6 @@ public final class SudokuBoardView extends JFrame
 	private final JButton resetButton;
 	
 	private final JLabel winLabel;
-	
-	private int checkOffset;
 	
 	public SudokuBoardView(IBoard model)
 	{
@@ -40,23 +38,23 @@ public final class SudokuBoardView extends JFrame
 		
 		this.checkButton = new JButton("Check");
 		this.checkButton.setSize(HEIGHT_WIDTH, 40);
-		this.checkButton.setLocation(10, HEIGHT_WIDTH - 60);
-		//this.add(this.checkButton);
+		this.checkButton.setLocation(10, HEIGHT_WIDTH);
+		this.add(this.checkButton);
 		
 		this.clearButton = new JButton("Clear");
 		this.clearButton.setSize(100, 40);
-		this.clearButton.setLocation(checkOffset + 70, HEIGHT_WIDTH / 2);
-		//this.add(this.clearButton);
+		this.clearButton.setLocation(HEIGHT_WIDTH, HEIGHT_WIDTH / 2);
+		this.add(this.clearButton);
 		
 		this.resetButton = new JButton("Reset");
 		this.resetButton.setSize(100, 40);
-		this.resetButton.setLocation(checkOffset + 70, HEIGHT_WIDTH / 2 + 60);
-		//this.add(this.resetButton);
+		this.resetButton.setLocation(HEIGHT_WIDTH, HEIGHT_WIDTH / 2 + 60);
+		this.add(this.resetButton);
 		
 		this.winLabel = new JLabel();
 		this.winLabel.setSize(200, 50);
-		this.winLabel.setLocation(checkOffset + 70, HEIGHT_WIDTH / 2 - 40);
-		//this.add(this.winLabel);
+		this.winLabel.setLocation(HEIGHT_WIDTH, HEIGHT_WIDTH / 2 - 40);
+		this.add(this.winLabel);
 		
 		this.setVisible(true);
 		this.update();
