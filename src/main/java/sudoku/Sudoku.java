@@ -5,8 +5,8 @@ import java.util.Random;
 import sudoku.board.Board;
 import sudoku.board.IBoard;
 import sudoku.database.IBoardDatabase;
-import sudoku.gui.SudokuBoardController;
-import sudoku.gui.SudokuBoardView;
+import sudoku.gui.game.SudokuBoardController;
+import sudoku.gui.game.SudokuBoardView;
 
 public final class Sudoku 
 {
