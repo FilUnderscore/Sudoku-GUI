@@ -2,6 +2,11 @@ package sudoku;
 
 import java.util.Random;
 
+import sudoku.board.Board;
+import sudoku.board.BoardValue;
+import sudoku.gui.SudokuBoardController;
+import sudoku.gui.SudokuBoardView;
+
 public final class Sudoku 
 {
 	// Randomly generated using https://www.sudokuweb.org/
@@ -20,93 +25,55 @@ public final class Sudoku
 			
 	private static final Random RANDOM = new Random();
 
-	private final int boardLength;
-	private final Board board;
+	private SudokuBoardView view;
+	private SudokuBoardController controller;
 	
-	private int currentIndex;
+	private Board board;
 	
-	public Sudoku(int n)
+	public Sudoku()
 	{
-		this.boardLength = n;
-		this.board = new Board(this.boardLength);
 	}
 	
-	// Temp
-	public Board getBoard()
+	public void start(int boardLength, int difficultySwaps)
 	{
-		return this.board;
+		this.generate(boardLength, difficultySwaps);
 	}
 	
-	public void start(int difficultySwaps)
+	private void initializeView()
 	{
-		this.generate(0);
+		// Cleanup previous view.
+		if(this.view != null)
+			this.view.dispose();
+		
+		this.view = new SudokuBoardView(this.board);
+		this.controller = new SudokuBoardController(this.board, this.view);
 	}
 	
-	private void generate(int difficultySwaps)
+	private void generate(int boardLength, int difficultySwaps)
 	{
-		for(int x = 0; x < this.boardLength; x++)
+		this.board = new Board(boardLength);
+		
+		for(int x = 0; x < boardLength; x++)
 		{
-			for(int y = 0; y < this.boardLength; y++)
+			for(int y = 0; y < boardLength; y++)
 			{
 				int value = STARTING_BOARD[x][y];
-				this.board.set(x, y, value, value > 0);
+				this.board.set(x, y, new BoardValue(value, value > 0));
 			}
 		}
 		
 		// Swap random regions (column-to-column).
 		for(int n = 0; n < difficultySwaps; n++)
 		{
-			int randomRegionX = RANDOM.nextInt(this.boardLength / 3);
-			int randomRegionY = RANDOM.nextInt(this.boardLength / 3);
+			int randomRegionX = RANDOM.nextInt(boardLength / 3);
+			int randomRegionY = RANDOM.nextInt(boardLength / 3);
 			
-			int randomTargetRegionX = RANDOM.nextInt(this.boardLength / 3);
+			int randomTargetRegionX = RANDOM.nextInt(boardLength / 3);
 			int randomTargetRegionY = randomRegionY;
 			
 			this.board.swap(randomRegionX, randomRegionY, randomTargetRegionX, randomTargetRegionY);
 		}
-	}
-	
-	public InputState enter(int value)
-	{
-		if(value <= 0 || value >= 10)
-			return InputState.INVALID;
 		
-		IndexedPosition indexPos = new IndexedPosition(currentIndex, this.boardLength);
-		this.board.set(indexPos.getX(), indexPos.getY(), value, false);
-		
-		return ++currentIndex < this.getTotalBoardSize() ? InputState.CONTINUE : InputState.FULL;
-	}
-	
-	private int getTotalBoardSize()
-	{
-		return this.boardLength * this.boardLength;
-	}
-	
-	public String print()
-	{
-		int length = this.boardLength;
-		int currentX;
-		int currentY;
-
-		do
-		{
-			if(currentIndex >= (length * length))
-				currentIndex = 0;
-			
-			currentX = currentIndex % length;
-			currentY = currentIndex / length;
-			
-			if(this.board.isGenerated(currentX, currentY))
-				currentIndex++;
-			else
-				break;
-		} while(true);
-
-		return this.board.print(currentX, currentY);
-	}
-	
-	public boolean isSolved()
-	{
-		return this.board.check();
+		this.initializeView();
 	}
 }

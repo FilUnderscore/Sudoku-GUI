@@ -1,11 +1,11 @@
-package sudoku;
+package sudoku.board;
 
-public final class SudokuValue 
+public final class BoardValue 
 {
 	private final int value;
 	private final boolean generated;
 	
-	public SudokuValue(int value, boolean generated)
+	public BoardValue(int value, boolean generated)
 	{
 		this.value = value;
 		this.generated = generated;

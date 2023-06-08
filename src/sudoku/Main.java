@@ -7,9 +7,7 @@ public final class Main
 {
 	public static void main(String[] args)
 	{
-		// Begin CUI.
-		
-		CUI cui = new CUI();
-		cui.start();
+		Sudoku sudoku = new Sudoku();
+		sudoku.start(9, 3);
 	}
 }

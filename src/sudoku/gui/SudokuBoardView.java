@@ -7,7 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import sudoku.Board;
+import sudoku.board.Board;
+import sudoku.board.BoardValue;
 
 public final class SudokuBoardView extends JFrame
 {
@@ -50,12 +51,12 @@ public final class SudokuBoardView extends JFrame
 				textField.setLocation(x * offset + 5 + regionOffsetX, y * offset + regionOffsetY);
 				textField.setHorizontalAlignment(JTextField.CENTER);
 
-				int value = model.get(x, y);
-				boolean generated = model.isGenerated(x, y);
+				BoardValue value = model.get(x, y);
+				boolean generated = value.isGenerated();
 				
 				if(generated)
 				{
-					textField.setText(Integer.toString(value));
+					textField.setText(Integer.toString(value.getValue()));
 					textField.setEnabled(false);
 					textField.setDisabledTextColor(Color.black);
 				}

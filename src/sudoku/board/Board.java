@@ -1,12 +1,12 @@
-package sudoku;
+package sudoku.board;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public final class Board 
+public final class Board implements IBoard
 {
 	private final int length;
-	private final BoardRegion[][] values;
+	private final IBoard[][] values;
 	
 	public Board(int n)
 	{
@@ -23,40 +23,37 @@ public final class Board
 		}
 	}
 	
-	public void set(int x, int y, int n, boolean generated)
+	@Override
+	public void set(int x, int y, BoardValue value)
 	{
 		// Set value in region at position.
-		this.getRegion(x, y).set(x%3, y%3, n, generated);
+		this.getSubBoardAt(x, y).set(x%3, y%3, value);
 	}
 	
 	public void swap(int rX, int rY, int tRX, int tRY)
 	{
 		// Swap two regions.
-		BoardRegion r = this.values[rX][rY];
-		BoardRegion tR = this.values[tRX][tRY];
+		IBoard r = this.values[rX][rY];
+		IBoard tR = this.values[tRX][tRY];
 		
 		this.values[rX][rY] = tR;
 		this.values[tRX][tRY] = r;
 	}
 	
-	public int get(int x, int y)
+	@Override
+	public BoardValue get(int x, int y)
 	{
 		// Get value in region at position.
-		return this.getRegion(x, y).get(x%3, y%3).getValue();
+		return this.getSubBoardAt(x, y).get(x%3, y%3);
 	}
 	
-	public boolean isGenerated(int x, int y)
-	{
-		// Check if this value was pre-generated or user-inputted.
-		return this.getRegion(x, y).get(x%3, y%3).isGenerated();
-	}
-	
-	private BoardRegion getRegion(int x, int y)
+	private IBoard getSubBoardAt(int x, int y)
 	{
 		// Get region at position.
 		return this.values[x/3][y/3];
 	}
 	
+	@Override
 	public boolean check()
 	{
 		// Check if the board is solved.
@@ -66,7 +63,7 @@ public final class Board
 		{
 			for(int y = 0; y < this.length; y++)
 			{
-				check[x][y] = this.get(x, y);
+				check[x][y] = this.get(x, y).getValue();
 			}
 		}
 		
@@ -137,32 +134,8 @@ public final class Board
 		
 		// Check 3x3 where n is located at (x, y)
 		// Should equal 1+2+...+9=45
-		BoardRegion region = this.getRegion(x, y);
-		return region.validate();
-	}
-	
-	public String print(int currentX, int currentY)
-	{
-		StringBuilder sb = new StringBuilder();
-		
-		for(int y = 0; y < this.length; y++)
-		{
-			for(int x = 0; x < this.length; x++)
-			{
-				if(x == currentX && y == currentY)
-				{
-					sb.append("> " + this.get(x, y) + " < | ");
-				}
-				else
-				{
-					sb.append("  " + this.get(x, y) + "   | ");
-				}
-			}
-			
-			sb.append("\n");
-		}
-		
-		return sb.toString();
+		IBoard region = this.getSubBoardAt(x, y);
+		return region.check();
 	}
 	
 	public int getLength()

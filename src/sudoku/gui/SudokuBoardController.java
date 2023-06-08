@@ -10,7 +10,8 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
-import sudoku.Board;
+import sudoku.board.Board;
+import sudoku.board.BoardValue;
 
 public final class SudokuBoardController 
 {
@@ -100,7 +101,7 @@ public final class SudokuBoardController
 				if(value == null)
 					continue;
 				
-				this.model.set(x, y, value.intValue(), false);
+				this.model.set(x, y, new BoardValue(value.intValue(), false));
 			}
 		}
 		
