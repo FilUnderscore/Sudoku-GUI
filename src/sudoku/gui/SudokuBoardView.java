@@ -18,6 +18,7 @@ public final class SudokuBoardView extends JFrame
 	
 	private final JTextField[][] textBoxes;
 	private final JButton checkButton;
+	private final JButton clearButton;
 	private final JButton resetButton;
 	
 	private final JLabel winLabel;
@@ -72,9 +73,14 @@ public final class SudokuBoardView extends JFrame
 		this.checkButton.setLocation(10, buttonOffset + 60);
 		this.add(this.checkButton);
 		
+		this.clearButton = new JButton("Clear");
+		this.clearButton.setSize(100, 40);
+		this.clearButton.setLocation(checkOffset + 70, HEIGHT_WIDTH / 2);
+		this.add(this.clearButton);
+		
 		this.resetButton = new JButton("Reset");
 		this.resetButton.setSize(100, 40);
-		this.resetButton.setLocation(checkOffset + 70, HEIGHT_WIDTH / 2);
+		this.resetButton.setLocation(checkOffset + 70, HEIGHT_WIDTH / 2 + 60);
 		this.add(this.resetButton);
 		
 		this.winLabel = new JLabel();
@@ -88,6 +94,11 @@ public final class SudokuBoardView extends JFrame
 	public JButton getCheckButton()
 	{
 		return this.checkButton;
+	}
+	
+	public JButton getClearButton()
+	{
+		return this.clearButton;
 	}
 	
 	public JButton getResetButton()
