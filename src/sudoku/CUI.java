@@ -1,5 +1,8 @@
 package sudoku;
 
+import sudoku.gui.SudokuBoardController;
+import sudoku.gui.SudokuBoardView;
+
 public final class CUI extends Console
 {
 	private Sudoku sudoku;
@@ -55,6 +58,9 @@ public final class CUI extends Console
 	{
 		this.sudoku = new Sudoku(9);
 		this.sudoku.start(this.readInt("Please enter the difficulty you would like (number of swaps, e.g. 2): "));
+
+		SudokuBoardView view = new SudokuBoardView(this.sudoku.getBoard());
+		SudokuBoardController controller = new SudokuBoardController(this.sudoku.getBoard(), view);		
 		
 		boolean solved;
 		

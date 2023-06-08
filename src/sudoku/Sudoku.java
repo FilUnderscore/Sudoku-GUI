@@ -31,6 +31,12 @@ public final class Sudoku
 		this.board = new Board(this.boardLength);
 	}
 	
+	// Temp
+	public Board getBoard()
+	{
+		return this.board;
+	}
+	
 	public void start(int difficultySwaps)
 	{
 		this.generate(0);

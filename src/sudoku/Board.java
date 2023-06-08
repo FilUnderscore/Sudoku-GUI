@@ -164,4 +164,9 @@ public final class Board
 		
 		return sb.toString();
 	}
+	
+	public int getLength()
+	{
+		return this.length;
+	}
 }
