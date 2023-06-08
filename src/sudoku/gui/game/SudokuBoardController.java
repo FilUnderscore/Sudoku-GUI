@@ -29,7 +29,7 @@ public final class SudokuBoardController
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				SudokuBoardController.this.NotifyCheckButtonPressed(view.getTextFields());
+				SudokuBoardController.this.NotifyCheckButtonPressed(view.getBoardPanel().getTextFields());
 			}
 		});
 		
@@ -57,7 +57,7 @@ public final class SudokuBoardController
 		{
 			for(int x = 0; x < model.getLength(); x++)
 			{
-				JTextField field = view.getTextFields()[x][y];
+				JTextField field = view.getBoardPanel().getTextFields()[y][x];
 				
 				if(!field.isEnabled())
 					continue;
@@ -68,7 +68,7 @@ public final class SudokuBoardController
 				int nextY = nextX == 0 ? y + 1 : y;
 				
 				if(nextY < model.getLength())
-					nextField = view.getTextFields()[nextX][nextY];
+					nextField = view.getBoardPanel().getTextFields()[nextY][nextX];
 				
 				// Check if we still have a next box or we are at the end.
 				boolean hasNext = nextField != null;
@@ -78,7 +78,7 @@ public final class SudokuBoardController
 				{
 					nextX = (nextX + 1) % model.getLength();
 					nextY = nextX == 0 ? (nextY + 1) : nextY;
-					nextField = view.getTextFields()[nextX][nextY];
+					nextField = view.getBoardPanel().getTextFields()[nextY][nextX];
 				}
 				
 				// Register key listeners / set custom document for numeric-only input.
