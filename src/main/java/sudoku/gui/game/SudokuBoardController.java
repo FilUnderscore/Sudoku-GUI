@@ -10,6 +10,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
+import sudoku.SudokuStart;
 import sudoku.board.BoardValue;
 import sudoku.board.IBoard;
 
@@ -47,7 +48,8 @@ public final class SudokuBoardController
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				// TODO refactor game then implement
+				view.dispose();
+				SudokuStart.open();
 			}
 		});
 		

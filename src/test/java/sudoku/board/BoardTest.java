@@ -8,7 +8,7 @@ public class BoardTest
 	@Test
 	public void boardSetSwapTest()
 	{
-		Board board = new DefaultBoard(9);
+		Board board = new DefaultBoard();
 		board.set(0, 2, new BoardValue(9, false));
 		
 		Assert.assertEquals("Expected board value to return 9.", 9, board.get(0, 2).getValue());
@@ -27,7 +27,7 @@ public class BoardTest
 	@Test
 	public void boardCheckTest()
 	{
-		IBoard board = new DefaultBoard(9);
+		IBoard board = new DefaultBoard();
 		
 		// Incomplete STARTING_BOARD.
 		int[][] STARTING_BOARD = new int[][]

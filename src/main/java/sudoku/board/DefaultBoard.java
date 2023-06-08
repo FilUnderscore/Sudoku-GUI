@@ -16,9 +16,9 @@ public class DefaultBoard extends Board
 		{0, 0, 0, 7, 1, 4, 9, 5, 0}
 	};
 		
-	public DefaultBoard(int n) 
+	public DefaultBoard()
 	{
-		super(n);
+		super(STARTING_BOARD.length);
 	}
 
 	@Override

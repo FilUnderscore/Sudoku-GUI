@@ -4,8 +4,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import sudoku.SudokuStart;
+
 public class SudokuStartPlayPanel extends JPanel
 {	
+	private SudokuStart model;
 	private JLabel instructionLabel;
 
 	private JLabel difficultyNumberLabel;
@@ -15,9 +18,11 @@ public class SudokuStartPlayPanel extends JPanel
 
 	private JButton startButton;
 	
-	public SudokuStartPlayPanel()
+	public SudokuStartPlayPanel(SudokuStart model)
 	{
-		this.setSize(300, 250);
+		this.model = model;
+		
+		this.setSize(300, 300);
 		this.setLayout(null);
 		
 		this.instructionLabel = new JLabel("Pick a difficulty (number of tile shuffles):");
@@ -40,5 +45,41 @@ public class SudokuStartPlayPanel extends JPanel
 		this.decButton.setSize(50, 50);
 		this.decButton.setLocation(50, 50);
 		this.add(this.decButton);	
+		
+		this.zeroButton = new JButton("0");
+		this.zeroButton.setSize(50, 50);
+		this.zeroButton.setLocation(115, 120);
+		this.add(this.zeroButton);
+		
+		this.startButton = new JButton("Start");
+		this.startButton.setSize(150, 50);
+		this.startButton.setLocation(70, 220);
+		this.add(this.startButton);
+	}
+	
+	public JButton getIncButton()
+	{
+		return this.incButton;
+	}
+	
+	public JButton getDecButton()
+	{
+		return this.decButton;
+	}
+	
+	public JButton getZeroButton()
+	{
+		return this.zeroButton;
+	}
+	
+	public JButton getStartButton()
+	{
+		return this.startButton;
+	}
+	
+	public void update()
+	{
+		this.difficultyNumberLabel.setText(Integer.toString(this.model.difficulty));
+		this.repaint();
 	}
 }

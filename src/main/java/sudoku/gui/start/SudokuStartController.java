@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import sudoku.SudokuStart;
-import sudoku.SudokuStart.State;
 
 public class SudokuStartController 
 {
@@ -14,23 +13,46 @@ public class SudokuStartController
 	{
 		this.model = model;
 		
-		view.getPlayButton().addActionListener(new ActionListener()
+		view.getPlayPanel().getIncButton().addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				model.state = State.PLAY;
+				model.difficulty++;
 				view.update();
-			}	
+			}
 		});
 		
-		view.getCreateButton().addActionListener(new ActionListener()
+		view.getPlayPanel().getDecButton().addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				model.state = State.CREATE;
+				if(model.difficulty == 0)
+					return;
+				
+				model.difficulty--;
 				view.update();
+			}
+		});
+		
+		view.getPlayPanel().getZeroButton().addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				model.difficulty = 0;
+				view.update();
+			}
+		});
+		
+		view.getPlayPanel().getStartButton().addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				view.dispose();
+				model.start();
 			}
 		});
 	}

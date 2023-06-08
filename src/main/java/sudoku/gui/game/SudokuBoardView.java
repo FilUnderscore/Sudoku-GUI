@@ -135,7 +135,7 @@ public final class SudokuBoardView extends JFrame
 		{
 			for(int x = 0; x < model.getLength(); x++)
 			{
-				JTextField textField = this.textBoxes[x][y];
+				JTextField textField = this.textBoxes[y][x];
 				BoardValue value = this.model.get(x, y);
 				
 				if(value.getValue() == 0 || value == null)
