@@ -123,14 +123,13 @@ public final class SudokuBoardController
 
 		@Override
 		public void keyPressed(KeyEvent e) 
-		{
-			
+		{	
+			this.current.setText(null);
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) 
 		{
-			
 		}
 	}
 }
