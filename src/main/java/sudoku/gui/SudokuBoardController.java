@@ -37,7 +37,8 @@ public final class SudokuBoardController
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				view.ClearAllBoxes();
+				model.clear();
+				view.update();
 			}
 		});
 		

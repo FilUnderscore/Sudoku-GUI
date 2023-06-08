@@ -16,4 +16,9 @@ public interface IBoard
 	 * Validate the board according to Sudoku rules.
 	 */
 	boolean check();
+	
+	/**
+	 * Clear the board back to its initial state.
+	 */
+	void clear();
 }

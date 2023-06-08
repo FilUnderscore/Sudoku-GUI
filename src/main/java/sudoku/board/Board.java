@@ -24,6 +24,18 @@ public final class Board implements IBoard
 	}
 	
 	@Override
+	public void clear()
+	{
+		for(int i = 0; i < this.values.length; i++)
+		{
+			for(int j = 0; j < this.values.length; j++)
+			{
+				this.values[i][j].clear();
+			}
+		}
+	}
+	
+	@Override
 	public void set(int x, int y, BoardValue value)
 	{
 		// Set value in region at position.

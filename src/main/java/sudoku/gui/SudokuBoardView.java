@@ -56,7 +56,6 @@ public final class SudokuBoardView extends JFrame
 				
 				if(generated)
 				{
-					textField.setText(Integer.toString(value.getValue()));
 					textField.setEnabled(false);
 					textField.setDisabledTextColor(Color.black);
 				}
@@ -90,6 +89,7 @@ public final class SudokuBoardView extends JFrame
 		this.add(this.winLabel);
 		
 		this.setVisible(true);
+		this.update();
 	}
 	
 	public JButton getCheckButton()
@@ -129,17 +129,20 @@ public final class SudokuBoardView extends JFrame
 		this.winLabel.setText(text);
 	}
 	
-	public void ClearAllBoxes()
+	public void update()
 	{
 		for(int y = 0; y < model.getLength(); y++)
 		{
 			for(int x = 0; x < model.getLength(); x++)
 			{
-				JTextField box = this.textBoxes[x][y];
+				JTextField textField = this.textBoxes[x][y];
+				BoardValue value = this.model.get(x, y);
 				
-				if(box.isEnabled())
-					box.setText("");
+				if(value.getValue() == 0 || value == null)
+					textField.setText(null);
+				else
+					textField.setText(Integer.toString(value.getValue()));
 			}
-		}
+		}	
 	}
 }

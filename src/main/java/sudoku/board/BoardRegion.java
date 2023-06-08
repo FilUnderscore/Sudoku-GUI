@@ -21,6 +21,22 @@ public final class BoardRegion implements IBoard
 	}
 	
 	@Override
+	public void clear()
+	{
+		for(int i = 0; i < 3; i++)
+		{
+			for(int j = 0; j < 3; j++)
+			{
+				if(!this.values[i][j].isGenerated())
+				{
+					// Set non-generated tiles back to zero.
+					this.values[i][j] = new BoardValue(0, false);
+				}
+			}
+		}
+	}
+	
+	@Override
 	public BoardValue get(int x, int y)
 	{
 		// Get value at position in array.
