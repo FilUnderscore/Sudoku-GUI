@@ -46,6 +46,10 @@ public abstract class SudokuBoardController
 				{
 					nextX = (nextX + 1) % model.getLength();
 					nextY = nextX == 0 ? (nextY + 1) : nextY;
+                                        
+                                        if(nextY == model.getLength())
+                                            break;
+                                        
 					nextField = panel.getTextFields()[nextY][nextX];
 				}
 				
