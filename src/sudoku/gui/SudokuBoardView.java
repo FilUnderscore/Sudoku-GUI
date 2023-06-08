@@ -33,7 +33,7 @@ public final class SudokuBoardView extends JFrame
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLayout(null);
 		
-		this.textBoxes = new SudokuJTextField[model.getLength()][model.getLength()];
+		this.textBoxes = new JTextField[model.getLength()][model.getLength()];
 		int offset = HEIGHT_WIDTH / model.getLength();
 		int buttonOffset = 0;
 		
@@ -44,7 +44,7 @@ public final class SudokuBoardView extends JFrame
 				int regionOffsetX = (x / 3) * REGION_OFFSET;
 				int regionOffsetY = (y / 3) * REGION_OFFSET;
 						
-				JTextField textField = new SudokuJTextField();
+				JTextField textField = new JTextField();
 				textField.setSize(offset - 5, offset - 5);
 				textField.setLocation(x * offset + 5 + regionOffsetX, y * offset + regionOffsetY);
 				textField.setHorizontalAlignment(JTextField.CENTER);
