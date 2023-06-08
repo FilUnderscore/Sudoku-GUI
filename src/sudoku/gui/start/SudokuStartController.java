@@ -13,6 +13,16 @@ public class SudokuStartController
 	{
 		this.model = model;
 		
+                view.getCreateButton().addActionListener(new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        view.dispose();
+                        model.create();
+                    }
+                });
+                
 		view.getPlayPanel().getIncButton().addActionListener(new ActionListener()
 		{
 			@Override

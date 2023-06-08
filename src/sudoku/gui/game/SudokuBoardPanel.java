@@ -31,47 +31,62 @@ public class SudokuBoardPanel extends JPanel
         HEIGHT_WIDTH -= 25;
         
         this.textBoxes = new JTextField[model.getLength()][model.getLength()];
-		int offset = HEIGHT_WIDTH / model.getLength();
+        int offset = HEIGHT_WIDTH / model.getLength();
 		
-		for(int y = 0; y < model.getLength(); y++)
-		{
-			for(int x = 0; x < model.getLength(); x++)
-			{
-				int regionOffsetX = (x / 3) * REGION_OFFSET;
-				int regionOffsetY = (y / 3) * REGION_OFFSET;
-						
-				JTextField textField = new JTextField();
-				textField.setSize(offset - 5, offset - 5);
-				textField.setLocation(x * offset + 5 + regionOffsetX, y * offset + regionOffsetY);
-				textField.setHorizontalAlignment(JTextField.CENTER);
-                                textField.setFont(textField.getFont().deriveFont(HEIGHT_WIDTH / 16.0f));
+	for(int y = 0; y < model.getLength(); y++)
+	{
+            for(int x = 0; x < model.getLength(); x++)
+            {
+		int regionOffsetX = (x / 3) * REGION_OFFSET;
+		int regionOffsetY = (y / 3) * REGION_OFFSET;
+				
+		JTextField textField = new JTextField();
+		textField.setSize(offset - 5, offset - 5);
+		textField.setLocation(x * offset + 5 + regionOffsetX, y * offset + regionOffsetY);
+		textField.setHorizontalAlignment(JTextField.CENTER);
+                textField.setFont(textField.getFont().deriveFont(HEIGHT_WIDTH / 16.0f));
                                 
-				BoardValue value = model.get(x, y);
-				boolean generated = value.isGenerated();
+		BoardValue value = model.get(x, y);
+		boolean generated = value.isGenerated();
 				
-				if(generated)
-				{
-                                    textField.setEnabled(false);
-                                    textField.setDisabledTextColor(Color.white);
-                                    textField.setBackground(Color.darkGray);
-				}
-                                else
-                                {
-                                    textField.setEnabled(true);
-                                }
-				
-				this.add(textField);
-				this.textBoxes[y][x] = textField;
-			}
+		if(generated)
+		{
+                    textField.setEnabled(false);
+                    textField.setDisabledTextColor(Color.white);
+                    textField.setBackground(Color.darkGray);
 		}
+                else
+                {
+                    textField.setEnabled(true);
+                }
+		
+		this.add(textField);
+		this.textBoxes[y][x] = textField;
+            }
+        }
                 
-                this.repaint();
+        this.repaint();
     }
     
-    
-	public JTextField[][] getTextFields()
-	{
-		return this.textBoxes;
-	}
+    public JTextField[][] getTextFields()
+    {
+	return this.textBoxes;
+    }
 	
+    public void update()
+    {
+	for(int y = 0; y < model.getLength(); y++)
+	{
+            for(int x = 0; x < model.getLength(); x++)
+            {
+                JTextField textField = this.getTextFields()[y][x];
+		BoardValue value = this.model.get(x, y);
+		
+		if(value == null || value.getValue() == 0)
+                    textField.setText(null);
+		else
+                    textField.setText(Integer.toString(value.getValue()));
+            }
+	}	
+    }
 }

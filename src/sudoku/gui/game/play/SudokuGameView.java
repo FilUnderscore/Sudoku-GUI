@@ -1,4 +1,4 @@
-package sudoku.gui.game;
+package sudoku.gui.game.play;
 
 import java.awt.Color;
 
@@ -9,12 +9,11 @@ import javax.swing.JTextField;
 
 import sudoku.board.BoardValue;
 import sudoku.board.IBoard;
+import sudoku.gui.game.SudokuBoardPanel;
 
-public final class SudokuBoardView extends JFrame
+public final class SudokuGameView extends JFrame
 {
 	private static final int HEIGHT_WIDTH = 700;
-	
-	private final IBoard model;
 	
         private final SudokuBoardPanel boardPanel;
 	private final JButton checkButton;
@@ -23,10 +22,8 @@ public final class SudokuBoardView extends JFrame
 	
 	private final JLabel winLabel;
 	
-	public SudokuBoardView(IBoard model)
-	{
-		this.model = model;
-		
+	public SudokuGameView(IBoard model)
+	{		
 		this.setTitle("Sudoku");
 		this.setSize(HEIGHT_WIDTH + 200, HEIGHT_WIDTH + 100);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -57,7 +54,7 @@ public final class SudokuBoardView extends JFrame
 		this.add(this.winLabel);
 		
 		this.setVisible(true);
-		this.update();
+                this.update();
 	}
 	
 	public JButton getCheckButton()
@@ -92,25 +89,14 @@ public final class SudokuBoardView extends JFrame
 		this.winLabel.setText(text);
 	}
 	
-	public void update()
-	{
-		for(int y = 0; y < model.getLength(); y++)
-		{
-			for(int x = 0; x < model.getLength(); x++)
-			{
-				JTextField textField = this.boardPanel.getTextFields()[y][x];
-				BoardValue value = this.model.get(x, y);
-				
-				if(value.getValue() == 0 || value == null)
-					textField.setText(null);
-				else
-					textField.setText(Integer.toString(value.getValue()));
-			}
-		}	
-	}
-        
         public SudokuBoardPanel getBoardPanel()
         {
             return this.boardPanel;
+        }
+        
+        public void update()
+        {
+            this.boardPanel.update();
+            this.repaint();
         }
 }

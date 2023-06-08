@@ -1,5 +1,6 @@
 package sudoku.gui.start;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -10,6 +11,9 @@ public final class SudokuStartView extends JFrame
 	private SudokuStart model;
 	private JLabel gameLabel;
 	
+        private JButton playButton;
+        private JButton createButton;
+        
 	private SudokuStartPlayPanel playPanel;
 	
 	public SudokuStartView(SudokuStart model)
@@ -18,7 +22,7 @@ public final class SudokuStartView extends JFrame
 		
 		this.setTitle("Welcome to Sudoku");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setSize(300, 500);
+		this.setSize(300, 600);
 		this.setLayout(null);
 		this.setLocationRelativeTo(null);
 		
@@ -28,8 +32,18 @@ public final class SudokuStartView extends JFrame
 		this.gameLabel.setFont(this.gameLabel.getFont().deriveFont(32.0f));
 		this.add(this.gameLabel);
 		
+                this.playButton = new JButton("-> Play <-");
+                this.playButton.setSize(150, 50);
+                this.playButton.setLocation(65, 70);
+                this.add(this.playButton);
+                
+                this.createButton = new JButton("Create");
+                this.createButton.setSize(150, 50);
+                this.createButton.setLocation(65, 140);
+                this.add(this.createButton);
+                
 		this.playPanel = new SudokuStartPlayPanel(model);
-		this.playPanel.setLocation(0, 50);
+		this.playPanel.setLocation(0, 220);
 		add(this.playPanel);
 		
 		this.setVisible(true);
@@ -39,6 +53,11 @@ public final class SudokuStartView extends JFrame
 	{
 		return this.playPanel;
 	}
+        
+        public JButton getCreateButton()
+        {
+            return this.createButton;
+        }
 	
 	public void update()
 	{

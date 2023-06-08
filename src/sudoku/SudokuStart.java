@@ -8,6 +8,7 @@ import sudoku.gui.start.SudokuStartView;
 
 public final class SudokuStart 
 {
+        private static IBoardDatabase sudokuBoardDatabase = new SudokuDerbyBoardDatabase();
 	public int difficulty;
 	
 	public static void open()
@@ -19,8 +20,12 @@ public final class SudokuStart
 	
 	public void start()
 	{
-		IBoardDatabase sudokuBoardDatabase = new SudokuDerbyBoardDatabase();
-		Sudoku sudoku = new Sudoku(sudokuBoardDatabase);
+		SudokuGame sudoku = new SudokuGame(sudokuBoardDatabase);
 		sudoku.start(difficulty);
 	}
+        
+        public void create()
+        {
+                SudokuCreate sudoku = new SudokuCreate(sudokuBoardDatabase);
+        }
 }

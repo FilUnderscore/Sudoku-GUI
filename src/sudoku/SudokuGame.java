@@ -6,20 +6,20 @@ import sudoku.board.Board;
 import sudoku.board.DefaultBoard;
 import sudoku.board.IBoard;
 import sudoku.database.IBoardDatabase;
-import sudoku.gui.game.SudokuBoardController;
-import sudoku.gui.game.SudokuBoardView;
+import sudoku.gui.game.play.SudokuGameController;
+import sudoku.gui.game.play.SudokuGameView;
 
-public final class Sudoku 
+public final class SudokuGame 
 {
 	private static final Random RANDOM = new Random();
 	private final IBoardDatabase boardDatabase;
 
-	private SudokuBoardView view;
-	private SudokuBoardController controller;
+	private SudokuGameView view;
+	private SudokuGameController controller;
 	
 	private IBoard board;
 	
-	public Sudoku(IBoardDatabase boardDatabase)
+	public SudokuGame(IBoardDatabase boardDatabase)
 	{
 		this.boardDatabase = boardDatabase;
 	}
@@ -64,11 +64,7 @@ public final class Sudoku
 	
 	private void initializeView()
 	{
-		// Cleanup previous view.
-		if(this.view != null)
-			this.view.dispose();
-		
-		this.view = new SudokuBoardView(this.board);
-		this.controller = new SudokuBoardController(this.board, this.view);
+		this.view = new SudokuGameView(this.board);
+		this.controller = new SudokuGameController(this.board, this.view.getBoardPanel(), this.view);
 	}
 }

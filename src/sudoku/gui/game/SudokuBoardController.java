@@ -1,63 +1,31 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package sudoku.gui.game;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.JTextField;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
-
-import sudoku.SudokuStart;
-import sudoku.board.BoardValue;
 import sudoku.board.IBoard;
 
-public final class SudokuBoardController 
+/**
+ *
+ * @author Filip
+ */
+public abstract class SudokuBoardController
 {
-	private IBoard model;
-	private SudokuBoardView view;
-	
-	public SudokuBoardController(IBoard model, SudokuBoardView view)
-	{
-		this.model = model;
-		this.view = view;
-
-		view.getCheckButton().addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e) 
-			{
-				SudokuBoardController.this.NotifyCheckButtonPressed(view.getBoardPanel().getTextFields());
-			}
-		});
-		
-		view.getClearButton().addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				model.clear();
-				view.update();
-			}
-		});
-		
-		view.getResetButton().addActionListener(new ActionListener()
-		{
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				view.dispose();
-				SudokuStart.open();
-			}
-		});
-		
+    public SudokuBoardController(IBoard model, SudokuBoardPanel panel)
+    {
+        
 		for(int y = 0; y < model.getLength(); y++)
 		{
 			for(int x = 0; x < model.getLength(); x++)
 			{
-				JTextField field = view.getBoardPanel().getTextFields()[y][x];
+				JTextField field = panel.getTextFields()[y][x];
 				
 				if(!field.isEnabled())
 					continue;
@@ -68,7 +36,7 @@ public final class SudokuBoardController
 				int nextY = nextX == 0 ? y + 1 : y;
 				
 				if(nextY < model.getLength())
-					nextField = view.getBoardPanel().getTextFields()[nextY][nextX];
+					nextField = panel.getTextFields()[nextY][nextX];
 				
 				// Check if we still have a next box or we are at the end.
 				boolean hasNext = nextField != null;
@@ -78,7 +46,7 @@ public final class SudokuBoardController
 				{
 					nextX = (nextX + 1) % model.getLength();
 					nextY = nextX == 0 ? (nextY + 1) : nextY;
-					nextField = view.getBoardPanel().getTextFields()[nextY][nextX];
+					nextField = panel.getTextFields()[nextY][nextX];
 				}
 				
 				// Register key listeners / set custom document for numeric-only input.
@@ -86,34 +54,9 @@ public final class SudokuBoardController
 				field.setDocument(new CustomDocument());
 			}
 		}
-	}
-	
-	public void NotifyCheckButtonPressed(JTextField[][] textBoxes)
-	{
-		for(int y = 0; y < model.getLength(); y++)
-		{
-			for(int x = 0; x < model.getLength(); x++)
-			{
-				String text = textBoxes[y][x].getText();
-				
-				if(text.isBlank())
-					continue;
-				
-				Integer value = Integer.valueOf(text);
-				
-				if(value == null)
-					continue;
-				
-                                if(!this.model.get(x, y).isGenerated())
-                                    this.model.set(x, y, new BoardValue(value.intValue(), false));
-			}
-		}
-		
-		boolean check = this.model.check();
-		this.view.NotifyCheck(check);
-	}
-	
-	private final class TextFieldKeyListener implements KeyListener
+    }
+    
+    protected final class TextFieldKeyListener implements KeyListener
 	{
 		private final JTextField current;
 		private final JTextField next;
@@ -148,8 +91,11 @@ public final class SudokuBoardController
 		}
 	}
 	
-	private final class CustomDocument extends PlainDocument
+	protected final class CustomDocument extends PlainDocument
 	{
+
+        public CustomDocument() {
+        }
 		public void insertString(int offset, String text, AttributeSet attr) throws BadLocationException
 		{
 			if(text == null || !text.matches("[0-9]")) // Use regex to allow only numbers to be entered.
