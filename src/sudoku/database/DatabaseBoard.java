@@ -4,9 +4,9 @@ import sudoku.board.Board;
 
 public final class DatabaseBoard extends Board
 {
-	private final int[] indices;
+	private final int[][] indices;
 	
-	public DatabaseBoard(int n, int[] indices)
+	public DatabaseBoard(int n, int[][] indices)
 	{
 		super(n);
 		this.indices = indices;
@@ -15,6 +15,6 @@ public final class DatabaseBoard extends Board
 	@Override
 	protected int getGeneratedValueAt(int x, int y) 
 	{
-		return this.indices[y * this.getLength() + x];
+            return this.indices[x][y];
 	}
 }
