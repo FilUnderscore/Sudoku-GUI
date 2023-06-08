@@ -7,15 +7,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import sudoku.board.Board;
 import sudoku.board.BoardValue;
+import sudoku.board.IBoard;
 
 public final class SudokuBoardView extends JFrame
 {
 	private static final int HEIGHT_WIDTH = 500;
 	private static final int REGION_OFFSET = 10;
 	
-	private final Board model;
+	private final IBoard model;
 	
 	private final JTextField[][] textBoxes;
 	private final JButton checkButton;
@@ -26,7 +26,7 @@ public final class SudokuBoardView extends JFrame
 	
 	private int checkOffset;
 	
-	public SudokuBoardView(Board model)
+	public SudokuBoardView(IBoard model)
 	{
 		this.model = model;
 		

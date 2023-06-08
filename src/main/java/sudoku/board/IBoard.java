@@ -13,6 +13,11 @@ public interface IBoard
 	BoardValue get(int x, int y);
 	
 	/**
+	 * Swap between two values on the board.
+	 */
+	void swap(int x, int y, int tX, int tY);
+	
+	/**
 	 * Validate the board according to Sudoku rules.
 	 */
 	boolean check();
@@ -21,4 +26,9 @@ public interface IBoard
 	 * Clear the board back to its initial state.
 	 */
 	void clear();
+	
+	/*
+	 * Get the board's length.
+	 */
+	int getLength();
 }

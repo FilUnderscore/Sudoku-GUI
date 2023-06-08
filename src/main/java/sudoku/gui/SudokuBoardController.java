@@ -10,15 +10,15 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
-import sudoku.board.Board;
 import sudoku.board.BoardValue;
+import sudoku.board.IBoard;
 
 public final class SudokuBoardController 
 {
-	private Board model;
+	private IBoard model;
 	private SudokuBoardView view;
 	
-	public SudokuBoardController(Board model, SudokuBoardView view)
+	public SudokuBoardController(IBoard model, SudokuBoardView view)
 	{
 		this.model = model;
 		this.view = view;

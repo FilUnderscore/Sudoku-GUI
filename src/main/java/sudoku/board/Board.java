@@ -1,9 +1,10 @@
 package sudoku.board;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
-public final class Board implements IBoard
+public abstract class Board implements IBoard
 {
 	private final int length;
 	private final IBoard[][] values;
@@ -22,6 +23,19 @@ public final class Board implements IBoard
 			}
 		}
 	}
+	
+	public void generate(int difficultySwaps)
+	{
+		for(int x = 0; x < this.length; x++)
+		{
+			for(int y = 0; y < this.length; y++)
+			{
+				this.set(x, y, new BoardValue(this.getGeneratedValueAt(x, y), true));
+			}
+		}
+	}
+	
+	protected abstract int getGeneratedValueAt(int x, int y);
 	
 	@Override
 	public void clear()
@@ -42,6 +56,7 @@ public final class Board implements IBoard
 		this.getSubBoardAt(x, y).set(x%3, y%3, value);
 	}
 	
+	@Override
 	public void swap(int rX, int rY, int tRX, int tRY)
 	{
 		// Swap two regions.

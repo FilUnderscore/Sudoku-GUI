@@ -67,4 +67,19 @@ public final class BoardRegion implements IBoard
 		
 		return sum == MAGIC_NUMBER;
 	}
+
+	@Override
+	public int getLength() 
+	{
+		return 3;
+	}
+
+	@Override
+	public void swap(int x, int y, int tX, int tY) 
+	{
+		BoardValue tempValue = this.values[x][y];
+
+		this.values[x][y] = this.values[tX][tY];
+		this.values[tX][tY] = tempValue;
+	}
 }
