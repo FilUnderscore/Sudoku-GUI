@@ -53,6 +53,16 @@ public final class SudokuGameController extends SudokuBoardController
 				SudokuStart.open();
 			}
 		});
+                
+                view.getInstructionsButton().addActionListener(new ActionListener()
+                {
+                   @Override
+                   public void actionPerformed(ActionEvent e)
+                   {
+                       SudokuInstructionsView instructionView = new SudokuInstructionsView();
+                       new SudokuInstructionsController(instructionView);
+                   }
+                });
 		
 	}
 	

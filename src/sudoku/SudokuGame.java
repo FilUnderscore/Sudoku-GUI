@@ -1,5 +1,6 @@
 package sudoku;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import sudoku.board.Board;
@@ -62,21 +63,40 @@ public final class SudokuGame
 			board.swap(randomRegionX, randomRegionY, randomTargetRegionX, randomTargetRegionY);
 		}
                 
-                // Remove hints.
-                for(int i = 0; i < difficulty; i++)
+                ArrayList<BoardHint> hints = new ArrayList<>();
+                
+                // Detect hints.
+                for(int x = 0; x < board.getLength(); x++)
                 {
-                    int randomX = RANDOM.nextInt(board.getLength());
-                    int randomY = RANDOM.nextInt(board.getLength());
-                    
-                    if(!board.get(randomX, randomY).isGenerated())
+                    for(int y = 0; y < board.getLength(); y++)
                     {
-                        i--;
-                        continue;
+                        if(board.get(x, y).isGenerated())
+                            hints.add(new BoardHint(x, y));
                     }
+                }
+                
+                // Remove hints.
+                int removed = 0;
+                while(!hints.isEmpty() && removed++ < difficulty)
+                {
+                    int index = RANDOM.nextInt(hints.size());
+                    BoardHint hint = hints.get(index);
                     
-                    board.set(randomX, randomY, new BoardValue(0, false));
+                    board.set(hint.x, hint.y, new BoardValue(0, false));
+                    hints.remove(index);
                 }
 	}
+        
+        private static final class BoardHint
+        {
+            public int x, y;
+            
+            public BoardHint(int x, int y)
+            {
+                this.x = x;
+                this.y = y;
+            }
+        }
 	
 	private void initializeView()
 	{

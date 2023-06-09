@@ -18,7 +18,8 @@ public final class SudokuGameView extends JFrame
 	private final JButton clearButton;
 	private final JButton resetButton;
 	
-	private final JLabel winLabel;
+        private final JButton instructionsButton;
+        private final JLabel winLabel;
 	
 	public SudokuGameView(IBoard model)
 	{		
@@ -46,14 +47,24 @@ public final class SudokuGameView extends JFrame
 		this.resetButton.setLocation(HEIGHT_WIDTH, HEIGHT_WIDTH / 2 + 60);
 		this.add(this.resetButton);
 		
+                this.instructionsButton = new JButton("Instructions");
+                this.instructionsButton.setSize(120, 40);
+                this.instructionsButton.setLocation(HEIGHT_WIDTH, HEIGHT_WIDTH / 2 - 60);
+                this.add(this.instructionsButton);
+                
 		this.winLabel = new JLabel();
 		this.winLabel.setSize(200, 50);
-		this.winLabel.setLocation(HEIGHT_WIDTH, HEIGHT_WIDTH / 2 - 40);
+		this.winLabel.setLocation(HEIGHT_WIDTH, HEIGHT_WIDTH / 2 - 100);
 		this.add(this.winLabel);
 		
 		this.setVisible(true);
                 this.update();
 	}
+        
+        public JButton getInstructionsButton()
+        {
+            return this.instructionsButton;
+        }
 	
 	public JButton getCheckButton()
 	{
