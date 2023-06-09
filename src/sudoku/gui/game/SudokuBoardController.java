@@ -18,8 +18,11 @@ import sudoku.board.IBoard;
  */
 public abstract class SudokuBoardController
 {
+    protected final IBoard model;
+    
     public SudokuBoardController(IBoard model, SudokuBoardPanel panel)
     {
+        this.model = model;
         
 		for(int y = 0; y < model.getLength(); y++)
 		{

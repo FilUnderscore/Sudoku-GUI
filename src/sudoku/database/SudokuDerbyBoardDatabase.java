@@ -1,12 +1,17 @@
 package sudoku.database;
 
+import java.awt.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.DatabaseMetaData;
+import java.util.ArrayList;
+import java.util.Random;
 
 import sudoku.board.Board;
+import sudoku.board.IBoard;
 
 public final class SudokuDerbyBoardDatabase implements IBoardDatabase
 {
@@ -39,20 +44,44 @@ public final class SudokuDerbyBoardDatabase implements IBoardDatabase
 	}
 	
         @Override
-        public void saveStartingBoard(int board_length, int[][] board_indices)
+        public boolean saveStartingBoard(IBoard board)
         {
+            int board_length = board.getLength();
+            int[][] board_indices = new int[board_length][board_length];
+            
+            for(int x = 0; x < board_length; x++)
+            {
+                for(int y = 0; y < board_length; y++)
+                {
+                    board_indices[x][y] = board.get(x, y).getValue();
+                }
+            }
+            
+            boolean success = false;
+            
             try
             {
                 try (Statement statement = this.connection.createStatement()) 
                 {
-                    statement.executeUpdate("CREATE TABLE IF NOT EXISTS starting_boards (board_length INT, board_indices VARCHAR(1024));");
-                    statement.executeUpdate("INSERT INTO starting_boards (board_length, board_indices) VALUES ('" + board_length + "','" + indices_to_string(board_length, board_indices) + "');");
+                    System.out.println("Ok");
+                    
+                     DatabaseMetaData databaseMetadata = this.connection.getMetaData();
+                     ResultSet resultSet = databaseMetadata.getTables(null, null, "STARTING_BOARDS", new String[] { "TABLE" });
+                    
+                     if(!resultSet.next())
+                        statement.executeUpdate("CREATE TABLE STARTING_BOARDS (id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY(Start with 1, Increment by 1), board_length INT NOT NULL, board_indices VARCHAR(255) NOT NULL)");
+                     
+                     System.out.println("What");
+                    success = statement.executeUpdate("INSERT INTO STARTING_BOARDS (board_length, board_indices) VALUES (" + board_length + ",'" + indices_to_string(board_length, board_indices) + "')") == 1;
                 }
             }
             catch(SQLException e)
-            {
+            {                
                 System.err.println("Failed to save starting board to database.");
+                e.printStackTrace();
             }
+            
+            return success;
         }
         
         private static String indices_to_string(int board_length, int[][] board_indices)
@@ -63,22 +92,22 @@ public final class SudokuDerbyBoardDatabase implements IBoardDatabase
             {
                 for(int y = 0; y < board_length; y++)
                 {
-                    str += Integer.toString(board_indices[x][y]) + ",";
+                    str += Integer.toString(board_indices[x][y]);
                 }
             }
             
-            return str.substring(0, str.length() - 1);
+            System.out.println(str);
+            
+            return str;
         }
         
         private static int[][] string_to_indices(int board_length, String board_indices_str)
         {
             int[][] board_indices = new int[board_length][board_length];
             
-            String[] board_indices_str_split = board_indices_str.split(",");
-            
-            for(int i = 0; i < board_indices_str_split.length; i++)
+            for(int i = 0; i < board_indices_str.length(); i++)
             {
-                int value = Integer.parseInt(board_indices_str_split[i]);
+                int value = Integer.parseInt(Character.toString(board_indices_str.charAt(i)));
                 board_indices[i / board_length][i % board_length] = value;
             }
             
@@ -92,23 +121,53 @@ public final class SudokuDerbyBoardDatabase implements IBoardDatabase
 		{
                     int boardLength;
                     int[][] indices;
+                    BoardEntry entry = null;
                     
                     try (Statement statement = this.connection.createStatement()) 
                     {
-                        ResultSet result = statement.executeQuery("SELECT board_length,board_indices FROM starting_boards ORDER BY RAND(); LIMIT 1");
+                        ResultSet result = statement.executeQuery("SELECT board_length, board_indices FROM STARTING_BOARDS");
                         if(result.getFetchSize() == 0)
                             return null;
-                        boardLength = result.getInt("board_length");
-                        indices = string_to_indices(boardLength, result.getString("board_indices"));
+                        
+                        ArrayList<BoardEntry> entries = new ArrayList<BoardEntry>();
+                        while(result.next())
+                        {
+                            boardLength = result.getInt("board_length");
+                            System.out.println(result.getString("board_indices"));
+                            
+                            indices = string_to_indices(boardLength, result.getString("board_indices"));   
+                            
+                            entry = new BoardEntry(boardLength, indices);
+                            entries.add(entry);
+                        }
+                        
+                        Random random = new Random();
+                        entry = entries.get(random.nextInt(entries.size()));
                     }
                         
-                    return new DatabaseBoard(boardLength, indices);
+                    if(entry == null)
+                        return null;
+                    
+                    return new DatabaseBoard(entry.board_length, entry.board_indices);
 		}
 		catch(SQLException e)
 		{
 			System.err.println("Failed to fetch random starting board from database.");
+                        e.printStackTrace();
 		}
 		
 		return null;
 	}
+        
+        private final class BoardEntry
+        {
+            public int board_length;
+            public int[][] board_indices;
+            
+            public BoardEntry(int board_length, int[][] board_indices)
+            {
+                this.board_length = board_length;
+                this.board_indices = board_indices;
+            }
+        }
 }

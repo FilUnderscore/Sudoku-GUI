@@ -22,6 +22,11 @@ public interface IBoard
 	 */
 	boolean check();
 	
+        /**
+         * Check if the board is solvable.
+         */
+        boolean isSolvable();
+        
 	/**
 	 * Clear the board back to its initial state.
 	 */

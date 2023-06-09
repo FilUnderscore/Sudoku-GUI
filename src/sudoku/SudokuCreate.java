@@ -14,7 +14,7 @@ import sudoku.gui.game.create.SudokuCreateView;
  *
  * @author Filip
  */
-public class SudokuCreate 
+public final class SudokuCreate 
 {
     private final IBoardDatabase boardDatabase;
     
@@ -38,7 +38,17 @@ public class SudokuCreate
     private void initializeView()
     {
         this.view = new SudokuCreateView(this.board);
-        this.controller = new SudokuCreateController(this.board, this.view.getBoardPanel());
+        this.controller = new SudokuCreateController(this.board, this.view, this);
+    }
+    
+    public boolean saveBoard()
+    {
+        return this.boardDatabase != null && this.boardDatabase.connect() && this.boardDatabase.saveStartingBoard(board);
+    }
+    
+    public boolean verifyBoard()
+    {
+        return this.board.isSolvable();
     }
     
     private class CreativeBoard extends Board

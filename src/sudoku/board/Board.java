@@ -113,6 +113,39 @@ public abstract class Board implements IBoard
 		
 		return valid;
 	}
+        
+        @Override
+        public boolean isSolvable()
+        {
+            // Check if the board is solved.
+		int[][] check = new int[this.length][this.length];
+		
+		for(int x = 0; x < this.length; x++)
+		{
+			for(int y = 0; y < this.length; y++)
+			{
+				check[x][y] = this.get(x, y).getValue();
+			}
+		}
+		
+		boolean valid = true;
+		for(int x = 0; x < this.length; x++)
+		{
+			for(int y = 0; y < this.length; y++)
+			{
+				if(!this.isSolvable(check, x, y))
+				{
+					valid = false;
+					break;
+				}
+			}
+			
+			if(!valid)
+				break;
+		}
+		
+		return valid;
+        }
 	
 	private boolean check(int[][] solved, int x, int y)
 	{
@@ -164,6 +197,58 @@ public abstract class Board implements IBoard
 		// Should equal 1+2+...+9=45
 		IBoard region = this.getSubBoardAt(x, y);
 		return region.check();
+	}
+        
+        private boolean isSolvable(int[][] solved, int x, int y)
+	{
+		int length = this.length;
+		
+		boolean valid = true;
+		
+		Set<Integer> set = new HashSet<>();
+		
+		// Check row.
+		for(int rX = 0; rX < length; rX++)
+		{
+			int rN = solved[rX][y];
+			
+			if(rN > 0 && set.contains(rN))
+			{
+				valid = false;
+				break;
+			}
+			
+			set.add(rN);
+		}
+                
+		set.clear();
+		
+		if(!valid)
+			return false;
+		
+		// Check column.
+		for(int rY = 0; rY < length; rY++)
+		{
+			int rN = solved[x][rY];
+			
+			if(rN > 0 && set.contains(rN))
+			{
+				valid = false;
+				break;
+			}
+			
+			set.add(rN);
+		}
+		
+		set.clear();
+		
+		if(!valid)
+			return false;
+		
+		// Check 3x3 where n is located at (x, y)
+		// Should equal 1+2+...+9=45
+		IBoard region = this.getSubBoardAt(x, y);
+		return region.isSolvable();
 	}
 	
 	public int getLength()

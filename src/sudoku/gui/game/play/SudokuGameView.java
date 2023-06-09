@@ -5,9 +5,7 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
-import sudoku.board.BoardValue;
 import sudoku.board.IBoard;
 import sudoku.gui.game.SudokuBoardPanel;
 

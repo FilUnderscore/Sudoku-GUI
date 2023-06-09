@@ -1,12 +1,12 @@
 package sudoku.database;
 
-import sudoku.board.Board;
+import sudoku.board.IBoard;
 
 public interface IBoardDatabase 
 {
 	boolean connect();
 	
-	Board fetchRandomStartingBoard();
+	IBoard fetchRandomStartingBoard();
         
-        void saveStartingBoard(int board_length, int[][] board_indices);
+        boolean saveStartingBoard(IBoard board);
 }

@@ -3,6 +3,7 @@ package sudoku;
 import java.util.Random;
 
 import sudoku.board.Board;
+import sudoku.board.BoardValue;
 import sudoku.board.DefaultBoard;
 import sudoku.board.IBoard;
 import sudoku.database.IBoardDatabase;
@@ -29,7 +30,7 @@ public final class SudokuGame
 		Board board = null;
 		
 		if(this.boardDatabase != null && this.boardDatabase.connect())
-			board = this.boardDatabase.fetchRandomStartingBoard();
+			board = (Board) this.boardDatabase.fetchRandomStartingBoard();
 		
                 if(board == null) // Database may have failed to initialize or is empty.
 			board = new DefaultBoard();
@@ -37,20 +38,20 @@ public final class SudokuGame
 		this.start(board, difficultySwaps);
 	}
 	
-	public void start(Board board, int difficultySwaps)
+	public void start(Board board, int difficulty)
 	{
 		this.board = board;
 	
 		board.generate();
-		shuffleBoard(board, difficultySwaps);
+		shuffleBoard(board, difficulty);
 		
 		this.initializeView();
 	}
 	
-	private static void shuffleBoard(Board board, int difficultySwaps)
+	private static void shuffleBoard(Board board, int difficulty)
 	{
 		// Swap random regions (column-to-column).
-		for(int n = 0; n < difficultySwaps; n++)
+		for(int n = 0; n < difficulty; n++)
 		{
 			int randomRegionX = RANDOM.nextInt(board.getLength() / 3);
 			int randomRegionY = RANDOM.nextInt(board.getLength() / 3);
@@ -60,6 +61,15 @@ public final class SudokuGame
 		
 			board.swap(randomRegionX, randomRegionY, randomTargetRegionX, randomTargetRegionY);
 		}
+                
+                // Remove hints.
+                for(int i = 0; i < difficulty; i++)
+                {
+                    int randomX = RANDOM.nextInt(board.getLength());
+                    int randomY = RANDOM.nextInt(board.getLength());
+                    
+                    board.set(randomX, randomY, new BoardValue(0, false));
+                }
 	}
 	
 	private void initializeView()

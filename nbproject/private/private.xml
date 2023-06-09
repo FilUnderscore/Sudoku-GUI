@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/Filip/Documents/NetBeansProjects/Sudoku_Project2/src/sudoku/SudokuCreate.java</file>
+            <file>file:/C:/Users/Filip/Documents/NetBeansProjects/Sudoku_Project2/src/sudoku/gui/start/SudokuStartController.java</file>
+            <file>file:/C:/Users/Filip/Documents/NetBeansProjects/Sudoku_Project2/src/sudoku/SudokuGame.java</file>
+            <file>file:/C:/Users/Filip/Documents/NetBeansProjects/Sudoku_Project2/src/sudoku/gui/game/play/SudokuGameView.java</file>
+            <file>file:/C:/Users/Filip/Documents/NetBeansProjects/Sudoku_Project2/src/sudoku/gui/game/SudokuBoardController.java</file>
+            <file>file:/C:/Users/Filip/Documents/NetBeansProjects/Sudoku_Project2/src/sudoku/SudokuStart.java</file>
+            <file>file:/C:/Users/Filip/Documents/NetBeansProjects/Sudoku_Project2/src/sudoku/gui/game/play/SudokuGameController.java</file>
+            <file>file:/C:/Users/Filip/Documents/NetBeansProjects/Sudoku_Project2/src/sudoku/gui/start/SudokuStartView.java</file>
+        </group>
+    </open-files>
 </project-private>

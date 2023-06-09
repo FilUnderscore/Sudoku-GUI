@@ -25,9 +25,9 @@ public class SudokuStartPlayPanel extends JPanel
 		this.setSize(300, 300);
 		this.setLayout(null);
 		
-		this.instructionLabel = new JLabel("Pick a difficulty (number of tile shuffles):");
+		this.instructionLabel = new JLabel("Pick a difficulty (tile shuffles & hints removed):");
 		this.instructionLabel.setSize(300, 50);
-		this.instructionLabel.setLocation(30, 0);
+		this.instructionLabel.setLocation(10, 0);
 		this.add(this.instructionLabel);
 		
 		this.difficultyNumberLabel = new JLabel("0");

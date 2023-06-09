@@ -14,7 +14,7 @@ import sudoku.board.IBoard;
  *
  * @author Filip
  */
-public class SudokuBoardPanel extends JPanel
+public final class SudokuBoardPanel extends JPanel
 {
     private static final int REGION_OFFSET = 10;
 	

@@ -67,6 +67,25 @@ public final class BoardRegion implements IBoard
 		
 		return sum == MAGIC_NUMBER;
 	}
+        
+        @Override
+        public boolean isSolvable()
+        {
+            // Check if all numbers summed in 3x3 region are equal to 45.
+		
+		int sum = 0;
+		
+		int length = this.values.length;
+		for(int x = 0; x < length; x++)
+		{
+			for(int y = 0; y < length; y++)
+			{
+				sum += this.get(x, y).getValue();
+			}
+		}
+		
+		return sum <= MAGIC_NUMBER;
+        }
 
 	@Override
 	public int getLength() 
