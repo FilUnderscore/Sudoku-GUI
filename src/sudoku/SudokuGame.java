@@ -68,6 +68,12 @@ public final class SudokuGame
                     int randomX = RANDOM.nextInt(board.getLength());
                     int randomY = RANDOM.nextInt(board.getLength());
                     
+                    if(!board.get(randomX, randomY).isGenerated())
+                    {
+                        i--;
+                        continue;
+                    }
+                    
                     board.set(randomX, randomY, new BoardValue(0, false));
                 }
 	}
