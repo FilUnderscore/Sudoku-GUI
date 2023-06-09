@@ -41,7 +41,7 @@ public final class SudokuGameView extends JFrame
 		this.clearButton.setLocation(HEIGHT_WIDTH, HEIGHT_WIDTH / 2);
 		this.add(this.clearButton);
 		
-		this.resetButton = new JButton("Reset");
+		this.resetButton = new JButton("Quit");
 		this.resetButton.setSize(100, 40);
 		this.resetButton.setLocation(HEIGHT_WIDTH, HEIGHT_WIDTH / 2 + 60);
 		this.add(this.resetButton);

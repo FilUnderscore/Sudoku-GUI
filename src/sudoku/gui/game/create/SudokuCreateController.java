@@ -7,6 +7,7 @@ package sudoku.gui.game.create;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import sudoku.SudokuCreate;
+import sudoku.SudokuStart;
 import sudoku.board.BoardValue;
 import sudoku.board.IBoard;
 import sudoku.gui.game.SudokuBoardController;
@@ -41,6 +42,16 @@ public final class SudokuCreateController extends SudokuBoardController
                     saveCheck = createModel.saveBoard();
 
                 view.NotifyVerifySave(verifyCheck, saveCheck);
+            }
+        });
+        
+        view.getExitButton().addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                view.dispose();
+                SudokuStart.open();
             }
         });
     }

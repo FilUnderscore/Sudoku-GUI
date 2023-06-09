@@ -10,8 +10,8 @@ public final class SudokuStartView extends JFrame
 {
 	private SudokuStart model;
 	private JLabel gameLabel;
-	
-        private JButton playButton;
+        private JLabel playLabel;
+
         private JButton createButton;
         
 	private SudokuStartPlayPanel playPanel;
@@ -32,16 +32,17 @@ public final class SudokuStartView extends JFrame
 		this.gameLabel.setFont(this.gameLabel.getFont().deriveFont(32.0f));
 		this.add(this.gameLabel);
 		
-                this.playButton = new JButton("-> Play <-");
-                this.playButton.setSize(150, 50);
-                this.playButton.setLocation(65, 70);
-                this.add(this.playButton);
-                
                 this.createButton = new JButton("Create");
-                this.createButton.setSize(150, 50);
-                this.createButton.setLocation(65, 140);
+                this.createButton.setSize(150, 60);
+                this.createButton.setLocation(65, 80);
                 this.add(this.createButton);
-                
+
+                this.playLabel = new JLabel("OR Play:");
+                this.playLabel.setSize(150, 50);
+                this.playLabel.setLocation(85, 160);
+                this.playLabel.setFont(this.playLabel.getFont().deriveFont(24.0f));
+                this.add(this.playLabel);
+                                
 		this.playPanel = new SudokuStartPlayPanel(model);
 		this.playPanel.setLocation(0, 220);
 		add(this.playPanel);
